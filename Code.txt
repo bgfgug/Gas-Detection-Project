@@ -1,0 +1,40 @@
+// Define pins
+const int gasSensorPin = A0;  // Analog pin for MQ5
+const int ledPin = 8;         // Digital pin for LED
+
+// Define a threshold for gas detection
+const int gasThreshold = 80;  // Adjust based on testing
+
+void setup() {
+  // Initialize serial monitor for debugging
+  Serial.begin(9600);
+  
+  // Set LED pin as output
+  pinMode(ledPin, OUTPUT);
+  
+  // Set gas sensor pin as input
+  pinMode(gasSensorPin, INPUT);
+}
+
+void loop() {
+  // Read analog value from the MQ5 sensor
+  int gasLevel = analogRead(gasSensorPin);
+  
+  // Print gas level to the Serial Monitor
+  Serial.print("Gas Level: ");
+  Serial.println(gasLevel);
+
+  // Check if gas level exceeds the threshold
+  if (gasLevel > gasThreshold) {
+    // If gas is detected, turn on LED
+    digitalWrite(ledPin, HIGH);
+    Serial.println("Gas Detected! LED ON");
+  } else {
+    // If no gas is detected, turn off LED
+    digitalWrite(ledPin, LOW);
+    Serial.println("No Gas. LED OFF");
+  }
+  
+  // Small delay for stability
+  delay(1000);
+}
